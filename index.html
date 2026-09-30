@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Goodwin &amp; Goodwin Exotics</title>
+<meta name="description" content="Guided exotic hunts for blackbuck, axis deer and springbok in the Texas Hill Country.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: full-bleed ridgeline hero, then a left-aligned 1100px column; hunts as a species ledger, not cards-in-a-row fluff */
+:root {
+  --bg: #e3e6dc;          /* caliche and sage */
+  --surface: #eef0e8;
+  --ink: #1d2620;         /* cedar shade */
+  --muted: #56615a;
+  --line: #bfc6b8;
+  --accent: #c9531c;      /* blaze orange, used sparingly */
+  --accent-ink: #ffffff;
+  --sky-top: #f2c07a;
+  --sky-bottom: #e9d8b8;
+  --ridge: #2f3d33;
+  --display: "Zilla Slab", Rockwell, "Roboto Slab", Georgia, serif;
+  --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161c18; --surface: #1f2721; --ink: #e6e8e0; --muted: #9da79f; --line: #36413a;
+    --accent: #e8703a; --accent-ink: #1b120d; --sky-top: #7a4b2e; --sky-bottom: #2b2a26; --ridge: #0f1411;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #161c18; --surface: #1f2721; --ink: #e6e8e0; --muted: #9da79f; --line: #36413a;
+  --accent: #e8703a; --accent-ink: #1b120d; --sky-top: #7a4b2e; --sky-bottom: #2b2a26; --ridge: #0f1411;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 var(--body); }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+.wrap { max-width: 1100px; margin: 0 auto; padding-inline: 20px; }
+.eyebrow { font: 600 12px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.05; margin: 0; text-wrap: balance; }
+h2 { font-size: clamp(30px, 4.5vw, 46px); font-weight: 700; }
+h3 { font-size: 26px; font-weight: 600; }
+p { margin: 0; }
+section { padding-block: 72px; }
+.sec-head { display: grid; gap: 10px; margin-bottom: 36px; max-width: 640px; }
+.sec-head p { color: var(--muted); }
+
+/* Nav */
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); border-bottom: 1px solid var(--line); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
+.brand { font: 700 22px/1 var(--display); text-decoration: none; letter-spacing: .01em; }
+.brand small { display: block; font: 600 10px/1.4 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.links { display: flex; gap: 22px; align-items: center; font-weight: 600; font-size: 15px; }
+.links a { text-decoration: none; }
+.links a:hover { color: var(--accent); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 4px; padding: 12px 20px; font: 700 15px/1 var(--body); text-decoration: none; cursor: pointer; }
+.btn:hover { filter: brightness(1.07); }
+.btn.ghost { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 2px var(--ink); }
+.menu-toggle { display: none; background: none; border: 2px solid var(--ink); color: var(--ink); border-radius: 4px; padding: 8px 12px; font: 700 14px var(--body); cursor: pointer; }
+@media (max-width: 820px) {
+  .menu-toggle { display: inline-block; }
+  .links { display: none; position: absolute; left: 0; right: 0; top: 100%; flex-direction: column; align-items: stretch; gap: 0; background: var(--bg); border-bottom: 1px solid var(--line); padding: 8px 20px 16px; }
+  .links.open { display: flex; }
+  .links a { padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .links .btn { margin-top: 12px; border-bottom: 0; }
+}
+
+/* Hero */
+.hero { position: relative; background: linear-gradient(var(--sky-top), var(--sky-bottom)); overflow: hidden; }
+.hero canvas { position: absolute; inset: auto 0 0 0; width: 100%; height: 62%; display: block; }
+.hero .wrap { position: relative; padding-block: 84px 150px; display: grid; gap: 22px; }
+.hero h1 { font-size: clamp(44px, 8vw, 92px); font-weight: 700; max-width: 11ch; color: #1d2620; }
+.hero .lede { font-size: 20px; max-width: 34em; color: #2a332c; }
+.hero .ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+.hero .btn.ghost { color: #1d2620; box-shadow: inset 0 0 0 2px #1d2620; }
+:root[data-theme="dark"] .hero h1, :root[data-theme="dark"] .hero .lede { color: #f1ece2; }
+:root[data-theme="dark"] .hero .btn.ghost { color: #f1ece2; box-shadow: inset 0 0 0 2px #f1ece2; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .hero h1, :root:not([data-theme="light"]) .hero .lede { color: #f1ece2; }
+  :root:not([data-theme="light"]) .hero .btn.ghost { color: #f1ece2; box-shadow: inset 0 0 0 2px #f1ece2; }
+}
+.facts { background: var(--ridge); color: #e6e8e0; }
+.facts .wrap { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; padding-block: 22px; }
+.facts div { display: grid; gap: 4px; }
+.facts b { font: 700 24px/1 var(--display); }
+.facts span { font: 400 12px/1.3 var(--mono); letter-spacing: .06em; text-transform: uppercase; opacity: .75; }
+@media (max-width: 700px) { .facts .wrap { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* Hunts ledger */
+.ledger { display: grid; border-top: 2px solid var(--ink); }
+.hunt { display: grid; grid-template-columns: 220px minmax(0, 1fr) 220px; gap: 28px; padding-block: 30px; border-bottom: 1px solid var(--line); align-items: start; }
+.hunt .name { display: grid; gap: 6px; }
+.hunt .sci { font: italic 400 14px/1.3 var(--body); color: var(--muted); }
+.tag { justify-self: start; font: 600 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; padding: 5px 7px; border-radius: 3px; background: var(--surface); border: 1px solid var(--line); color: var(--muted); }
+.tag.limited { color: var(--accent); border-color: var(--accent); background: transparent; }
+.hunt .desc { display: grid; gap: 14px; min-width: 0; }
+.specs { display: flex; flex-wrap: wrap; gap: 8px 22px; font: 400 13px/1.4 var(--mono); color: var(--muted); }
+.specs b { color: var(--ink); font-weight: 600; }
+.price { display: grid; gap: 6px; justify-items: end; text-align: right; }
+.price .amt { font: 700 34px/1 var(--display); font-variant-numeric: tabular-nums; }
+.price small { font-size: 13px; color: var(--muted); }
+.price .amt-call { font-size: 24px; }
+@media (max-width: 820px) {
+  .hunt { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .price { justify-items: start; text-align: left; }
+}
+.included { margin-top: 36px; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 20px; }
+.included div { border-left: 3px solid var(--accent); padding-left: 14px; display: grid; gap: 4px; }
+.included b { font: 600 18px/1.2 var(--display); }
+.included span { font-size: 15px; color: var(--muted); }
+
+/* About */
+.about { background: var(--surface); }
+.about .wrap { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 48px; align-items: start; }
+.about .copy { display: grid; gap: 16px; max-width: 60ch; }
+.about dl { margin: 0; display: grid; gap: 0; border-top: 2px solid var(--ink); }
+.about dl div { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 12px; padding-block: 12px; border-bottom: 1px solid var(--line); }
+.about dt { font: 600 12px/1.6 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.about dd { margin: 0; }
+@media (max-width: 820px) { .about .wrap { grid-template-columns: minmax(0, 1fr); } }
+
+.stock { border: 2px solid var(--ink); border-radius: 4px; padding: 28px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px; }
+.stock .copy { display: grid; gap: 8px; max-width: 60ch; }
+.stock p { color: var(--muted); }
+
+/* FAQ */
+.faq { display: grid; border-top: 2px solid var(--ink); max-width: 820px; }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary { cursor: pointer; list-style: none; padding: 18px 36px 18px 0; position: relative; font: 600 19px/1.3 var(--display); }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; position: absolute; right: 4px; top: 14px; font: 400 26px/1 var(--mono); color: var(--accent); }
+.faq details[open] summary::after { content: "–"; }
+.faq details p { padding: 0 0 18px; color: var(--muted); max-width: 65ch; }
+
+/* Inquiry */
+.inquiry .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 48px; }
+.inquiry .side { display: grid; gap: 16px; align-content: start; }
+.inquiry .side p { color: var(--muted); }
+.steps { display: grid; gap: 12px; margin: 8px 0 0; padding: 0; list-style: none; counter-reset: s; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 10px; font-size: 15px; }
+.steps li::before { content: counter(s); font: 700 14px/28px var(--mono); text-align: center; width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--accent); color: var(--accent); }
+form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; background: var(--surface); padding: 26px; border-radius: 4px; border: 1px solid var(--line); }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field.full { grid-column: 1 / -1; }
+label { font: 600 12px/1.2 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+input, select, textarea { width: 100%; font: 400 16px/1.4 var(--body); color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 3px; padding: 11px 12px; }
+textarea { min-height: 110px; resize: vertical; }
+input[aria-invalid="true"], select[aria-invalid="true"] { border-color: var(--accent); }
+.err { font-size: 13px; color: var(--accent); min-height: 1em; }
+.form-foot { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.form-foot small { color: var(--muted); font-size: 13px; }
+.status { grid-column: 1 / -1; padding: 14px 16px; border-radius: 3px; border: 1px solid var(--accent); font-size: 15px; }
+@media (max-width: 820px) { .inquiry .wrap { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 520px) { form { grid-template-columns: minmax(0, 1fr); padding: 18px; } }
+
+footer { border-top: 1px solid var(--line); padding-block: 28px; font-size: 14px; color: var(--muted); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top">Goodwin &amp; Goodwin<small>Exotic hunts &amp; fishing · Texas Hill Country</small></a>
+    <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="navLinks">Menu</button>
+    <nav class="links" id="navLinks">
+      <a href="#hunts">Hunts</a>
+      <a href="#ranch">The ranch</a>
+      <a href="#fishing">Fishing</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn" href="#book">Book a hunt</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <canvas id="ridge" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <p class="eyebrow" style="color:inherit;opacity:.7">West of Austin · Year-round exotics</p>
+      <h1>Hunt blackbuck and axis on Hill Country ground.</h1>
+      <p class="lede">Guided day hunts for exotics on a family ranch in Spicewood, Texas. One guide per hunter, and your trophy handled right from field to taxidermist.</p>
+      <div class="ctas">
+        <a class="btn" href="#book">Check dates</a>
+        <a class="btn ghost" href="#hunts">See hunts &amp; pricing</a>
+      </div>
+    </div>
+  </div>
+  <div class="facts">
+    <div class="wrap">
+      <div><b>1:1</b><span>Guide to hunter</span></div>
+      <div><b>Day hunts</b><span>Open year-round</span></div>
+      <div><b>~45 min</b><span>From Austin</span></div>
+      <div><b>Rifle or bow</b><span>Both welcome</span></div>
+    </div>
+  </div>
+
+  <section id="hunts">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Hunts &amp; pricing</p>
+        <h2>Pick your animal.</h2>
+        <p>Every hunt is a guided day hunt, sunrise to dark. Prices are per hunter and include your guide and field care.</p>
+      </div>
+      <div class="ledger" id="ledger"></div>
+      <div class="included">
+        <div><b>Full day</b><span>Morning and evening hunts, sunrise to dark.</span></div>
+        <div><b>Guide &amp; vehicle</b><span>One guide per hunter, blinds and stalks.</span></div>
+        <div><b>Field care</b><span>Caping, quartering and cooler space.</span></div>
+        <div><b>Not included</b><span>Lodging, Texas hunting license, taxidermy, gratuity.</span></div>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="ranch" class="about">
+    <div class="wrap">
+      <div class="copy">
+        <p class="eyebrow">The ranch</p>
+        <h2>Cedar, live oak and limestone.</h2>
+        <p>The ranch sits in the rough country above Lake Travis, where cedar breaks and live oak mottes give way to open pasture. Exotics have run this ground for years, and the herd is managed for age and quality, with feed and protein programs aimed at mature trophies.</p>
+        <p>We keep groups small on purpose. You hunt with one guide who knows where the animals bed, water and feed, and we'd rather you pass on a young ram than take one that isn't ready.</p>
+      </div>
+      <dl>
+        <div><dt>Location</dt><dd>Spicewood, Texas. Exact directions sent after booking.</dd></div>
+        <div><dt>Airports</dt><dd>Austin-Bergstrom (AUS), about an hour.</dd></div>
+        <div><dt>Terrain</dt><dd>Rolling limestone hills, cedar and oak cover.</dd></div>
+        <div><dt>Group size</dt><dd>Up to 4 hunters per trip.</dd></div>
+        <div><dt>Weapons</dt><dd>Rifle or archery.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section style="padding-bottom:0">
+    <div class="wrap">
+      <div class="stock">
+        <div class="copy">
+          <p class="eyebrow">Breeding stock</p>
+          <h3>Looking to buy animals?</h3>
+          <p>We sell blackbuck and axis breeding stock to other ranches. Inventory changes weekly, so reach out with what you need and we'll tell you what's available.</p>
+        </div>
+        <a class="btn ghost" href="#book" data-interest="Breeding stock">Ask about stock</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="fishing" style="padding-bottom:0">
+    <div class="wrap">
+      <div class="stock">
+        <div class="copy">
+          <p class="eyebrow">Fishing guides</p>
+          <h3>Fish Lake Travis and Lake LBJ.</h3>
+          <p>We also run guided fishing trips on Lake Travis and Lake LBJ for largemouth bass, white bass, catfish and crappie. Pair it with a hunt or book it on its own. A Texas fishing license is required.</p>
+        </div>
+        <a class="btn ghost" href="#book" data-interest="Fishing trip">Ask about fishing</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">FAQ</p>
+        <h2>Before you come out.</h2>
+      </div>
+      <div class="faq">
+        <details><summary>Do I need a hunting license?</summary><p>Yes. Texas requires a hunting license to hunt exotics. You can buy one online from Texas Parks and Wildlife before your trip, and we'll send the link when you book.</p></details>
+        <details><summary>When is the season?</summary><p>Exotics on private land in Texas have no closed season, so we hunt year-round. Cooler months from November to March are most comfortable. Axis bucks are often in hard antler through summer.</p></details>
+        <details><summary>Rifle or bow?</summary><p>Either. Bowhunters hunt from blinds near water and feed. Rifle hunters mix blinds with spot-and-stalk. Tell us what you're shooting and we'll plan around it.</p></details>
+        <details><summary>How does booking work?</summary><p>Send an inquiry with your dates. We confirm availability, then a deposit holds your spot and the balance is due on arrival. You'll also sign a liability waiver online before you arrive.</p></details>
+        <details><summary>What should I bring?</summary><p>Your license, weapon and ammunition or arrows, earth-tone clothing, good boots and a cooler for meat if you're driving. We cover your guide and field care. Hunts are day trips, so plan your own lodging if you're traveling in.</p></details>
+        <details><summary>What happens to my trophy?</summary><p>Your guide caps and quarters the animal. We can hand it off to a local taxidermist we trust or pack it for you to take home.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section id="book" class="inquiry" style="padding-top:0">
+    <div class="wrap">
+      <div class="side">
+        <p class="eyebrow">Book a hunt</p>
+        <h2>Tell us when you'd like to come.</h2>
+        <p>We reply within one business day.</p>
+        <ol class="steps">
+          <li>Send your dates and the animal you're after.</li>
+          <li>We confirm availability and send a quote.</li>
+          <li>A deposit holds your dates.</li>
+          <li>Sign the waiver online, then come hunt.</li>
+        </ol>
+      </div>
+      <form id="inquiry" novalidate>
+        <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" autocomplete="name" required><span class="err" id="e-name"></span></div>
+        <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required><span class="err" id="e-email"></span></div>
+        <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" autocomplete="tel"><span class="err" id="e-phone"></span></div>
+        <div class="field"><label for="f-species">Interested in</label><select id="f-species" name="species" required></select><span class="err" id="e-species"></span></div>
+        <div class="field"><label for="f-date">Preferred arrival</label><input id="f-date" name="date" type="date"><span class="err" id="e-date"></span></div>
+        <div class="field"><label for="f-party">Hunters</label><select id="f-party" name="party"><option>1</option><option>2</option><option>3</option><option>4</option></select><span class="err"></span></div>
+        <div class="field full"><label for="f-weapon">Weapon</label><select id="f-weapon" name="weapon"><option>Rifle</option><option>Bow</option><option>Not sure yet</option></select></div>
+        <div class="field full"><label for="f-msg">Anything else</label><textarea id="f-msg" name="message" placeholder="Trophy goals, flexibility on dates, questions…"></textarea></div>
+        <div class="form-foot"><small>We only use this to reply to you.</small><button class="btn" type="submit" id="f-submit">Send inquiry</button></div>
+        <div class="status" id="f-status" role="status" hidden></div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr">2026</span> Goodwin &amp; Goodwin Exotics · Spicewood, Texas</span>
+  </div>
+</footer>
+
+<script>
+// Set this to your Formspree (or similar) endpoint before launch, e.g. "https://formspree.io/f/abcdwxyz".
+var FORM_ENDPOINT = "https://formspree.io/f/xeaonwok";
+
+var HUNTS = [
+  { id: "blackbuck", name: "Blackbuck", sci: "Antilope cervicapra", tag: "Most popular",
+    desc: "Fast, wary antelope from India with spiraled horns. Mature rams turn nearly black and hold territory on open pasture, which makes for classic spot-and-stalk.",
+    specs: [["Trophy", "22\"+"], ["Hunt", "Day hunt"], ["Weapon", "Rifle / bow"]], price: 4500 },
+  { id: "axis", name: "Axis deer", sci: "Axis axis", tag: "Summer hard antler",
+    desc: "Spotted deer that stay spotted year-round. Bucks carry long, heavy racks and often hold hard antler through the summer months, when other deer are in velvet.",
+    specs: [["Trophy", "28–34\""], ["Hunt", "Day hunt"], ["Weapon", "Rifle / bow"]], price: null },
+  { id: "springbok", name: "Springbok", sci: "Antidorcas marsupialis", tag: "Limited", limited: true,
+    desc: "Southern African gazelle known for pronking. We take only a few each year to protect the herd, so book early.",
+    specs: [["Trophy", "12–14\""], ["Hunt", "Day hunt"], ["Weapon", "Rifle"]], price: 7000 }
+];
+
+function fmtPrice(n) { return "$" + n.toLocaleString("en-US"); }
+
+function renderHunts(root) {
+  root.innerHTML = "";
+  HUNTS.forEach(function (h) {
+    var row = document.createElement("article");
+    row.className = "hunt";
+    row.id = "hunt-" + h.id;
+    var specs = h.specs.map(function (s) { return "<span>" + s[0] + " <b>" + s[1] + "</b></span>"; }).join("");
+    row.innerHTML =
+      '<div class="name"><h3>' + h.name + '</h3><span class="sci">' + h.sci + '</span>' +
+      '<span class="tag' + (h.limited ? " limited" : "") + '">' + h.tag + '</span></div>' +
+      '<div class="desc"><p>' + h.desc + '</p><div class="specs">' + specs + '</div></div>' +
+      '<div class="price">' + (h.price
+        ? '<small>Starting at</small><span class="amt">' + fmtPrice(h.price) + '</span><small>per hunter, day hunt</small>'
+        : '<span class="amt amt-call">Call for pricing</span><small>per hunter, day hunt</small>') +
+      '<a class="btn" href="#book" data-interest="' + h.name + '">Inquire</a></div>';
+    root.appendChild(row);
+  });
+}
+
+function fillSpecies(sel) {
+  sel.innerHTML = '<option value="">Choose one</option>';
+  HUNTS.map(function (h) { return h.name; }).concat(["Combo hunt", "Fishing trip", "Breeding stock"]).forEach(function (n) {
+    var o = document.createElement("option"); o.value = n; o.textContent = n; sel.appendChild(o);
+  });
+}
+
+function validate(data) {
+  var errors = {};
+  if (!data.name || !data.name.trim()) errors.name = "Enter your name.";
+  if (!data.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) errors.email = "Enter an email we can reply to.";
+  if (!data.species) errors.species = "Choose what you'd like to hunt.";
+  if (data.phone && data.phone.replace(/\D/g, "").length < 10) errors.phone = "Enter a 10-digit phone number, or leave it blank.";
+  if (data.date) {
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    var d = new Date(data.date + "T00:00:00");
+    if (isNaN(d.getTime()) || d < today) errors.date = "Pick a date in the future.";
+  }
+  return errors;
+}
+
+function showErrors(form, errors) {
+  ["name", "email", "phone", "species", "date"].forEach(function (k) {
+    var input = form.querySelector('[name="' + k + '"]');
+    var e = document.getElementById("e-" + k);
+    if (e) e.textContent = errors[k] || "";
+    if (input) input.setAttribute("aria-invalid", errors[k] ? "true" : "false");
+  });
+}
+
+function setStatus(msg) {
+  var s = document.getElementById("f-status");
+  s.textContent = msg; s.hidden = false;
+}
+
+function handleSubmit(ev) {
+  ev.preventDefault();
+  var form = ev.target;
+  var data = {};
+  new FormData(form).forEach(function (v, k) { data[k] = v; });
+  var errors = validate(data);
+  showErrors(form, errors);
+  var first = Object.keys(errors)[0];
+  if (first) { var f = form.querySelector('[name="' + first + '"]'); if (f) f.focus(); return Promise.resolve(false); }
+  if (!FORM_ENDPOINT) {
+    setStatus("Preview only: this form isn't connected to an inbox yet, so nothing was sent.");
+    return Promise.resolve(false);
+  }
+  var btn = document.getElementById("f-submit");
+  btn.disabled = true; btn.textContent = "Sending…";
+  return fetch(FORM_ENDPOINT, { method: "POST", headers: { "Accept": "application/json", "Content-Type": "application/json" }, body: JSON.stringify(data) })
+    .then(function (r) {
+      if (!r.ok) throw new Error("status " + r.status);
+      form.reset();
+      setStatus("Thanks. Your inquiry is in, and we'll reply within one business day.");
+      return true;
+    })
+    .catch(function () {
+      setStatus("Your inquiry didn't go through. Check your connection and try again.");
+      return false;
+    })
+    .finally(function () { btn.disabled = false; btn.textContent = "Send inquiry"; });
+}
+
+function drawRidges(canvas) {
+  var ctx = canvas.getContext && canvas.getContext("2d");
+  if (!ctx) return;
+  var w = canvas.clientWidth || 1200, h = canvas.clientHeight || 300;
+  var dpr = window.devicePixelRatio || 1;
+  canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, w, h);
+  var ridge = getComputedStyle(document.documentElement).getPropertyValue("--ridge").trim() || "#2f3d33";
+  var layers = [ { base: .42, amp: 34, alpha: .35, seed: 3 }, { base: .6, amp: 28, alpha: .6, seed: 11 }, { base: .8, amp: 20, alpha: 1, seed: 23 } ];
+  layers.forEach(function (L) {
+    ctx.beginPath(); ctx.moveTo(0, h);
+    for (var x = 0; x <= w; x += 6) {
+      var t = x / w;
+      var y = h * L.base
+        - Math.sin(t * 3.1 + L.seed) * L.amp
+        - Math.sin(t * 7.3 + L.seed * 2) * L.amp * .45
+        - Math.sin(t * 17 + L.seed) * L.amp * .15;
+      ctx.lineTo(x, y);
+    }
+    ctx.lineTo(w, h); ctx.closePath();
+    ctx.globalAlpha = L.alpha; ctx.fillStyle = ridge; ctx.fill();
+  });
+  ctx.globalAlpha = 1;
+}
+
+function init() {
+  renderHunts(document.getElementById("ledger"));
+  var sel = document.getElementById("f-species");
+  fillSpecies(sel);
+  document.getElementById("yr").textContent = new Date().getFullYear();
+
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest("[data-interest]");
+    if (a) sel.value = a.getAttribute("data-interest");
+  });
+
+  var toggle = document.getElementById("menuToggle"), links = document.getElementById("navLinks");
+  toggle.addEventListener("click", function () {
+    var open = links.classList.toggle("open");
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+  links.addEventListener("click", function (e) {
+    if (e.target.tagName === "A") { links.classList.remove("open"); toggle.setAttribute("aria-expanded", "false"); }
+  });
+
+  document.getElementById("inquiry").addEventListener("submit", handleSubmit);
+
+  var canvas = document.getElementById("ridge");
+  drawRidges(canvas);
+  var t;
+  window.addEventListener("resize", function () { clearTimeout(t); t = setTimeout(function () { drawRidges(canvas); }, 120); });
+  if (window.matchMedia) {
+    var mq = window.matchMedia("(prefers-color-scheme: dark)");
+    if (mq.addEventListener) mq.addEventListener("change", function () { drawRidges(canvas); });
+  }
+}
+
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
+</script>
+
+</body>
+</html>
